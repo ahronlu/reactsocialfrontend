@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useImmerReducer } from 'use-immer';
 import Page from './Page';
 import { useParams, Link, withRouter } from 'react-router-dom';
