@@ -4,7 +4,7 @@ import DispatchContext from '../DispatchContext';
 import StateContext from '../StateContext';
 import ReactTooltip from 'react-tooltip';
 
-function HeaderLoggedIn(props) {
+function HeaderLoggedIn() {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
 
