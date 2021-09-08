@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 
-function Container(props) {
+function Container({ children, wide }) {
   return (
     <div
-      className={'container py-md-5 ' + (props.wide ? '' : 'container--narrow')}
+      className={'container py-md-5 ' + (wide ? '' : 'container--narrow')}
     >
-      {props.children}
+      {children}
     </div>
   );
 }
