@@ -1,40 +1,40 @@
-import { useState, useReducer, useEffect, Suspense } from 'react';
-import ReactDOM from 'react-dom';
-import { useImmerReducer } from 'use-immer';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { CSSTransition } from 'react-transition-group';
-import Axios from 'axios';
+import { useState, useReducer, lazy, useEffect, Suspense } from "react";
+import ReactDOM from "react-dom";
+import { useImmerReducer } from "use-immer";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
+import Axios from "axios";
 Axios.defaults.baseURL =
-  process.env.BACKENDURL || 'https://socialkof.herokuapp.com';
+  process.env.BACKENDURL || "https://socialkof.herokuapp.com";
 
-import StateContext from './StateContext';
-import DispatchContext from './DispatchContext';
+import StateContext from "./StateContext";
+import DispatchContext from "./DispatchContext";
 
 // Components
-import Header from './components/Header';
-import HomeGuest from './components/HomeGuest';
-import Footer from './components/Footer';
-import About from './components/About';
-import Terms from './components/Terms';
-import Home from './components/Home';
-const CreatePost = React.lazy(() => import('./components/CreatePost'));
-const ViewSinglePost = React.lazy(() => import('./components/ViewSinglePost'));
-import FlashMessages from './components/FlashMessages';
-import Profile from './components/Profile';
-import EditPost from './components/EditPost';
-import NotFound from './components/NotFound';
-const Search = React.lazy(() => import('./components/Search'));
-const Chat = React.lazy(() => import('./components/Chat'));
-import LoadingDotsIcon from './components/LoadingDotsIcon';
+import Header from "./components/Header";
+import HomeGuest from "./components/HomeGuest";
+import Footer from "./components/Footer";
+import About from "./components/About";
+import Terms from "./components/Terms";
+import Home from "./components/Home";
+const CreatePost = lazy(() => import("./components/CreatePost"));
+const ViewSinglePost = lazy(() => import("./components/ViewSinglePost"));
+import FlashMessages from "./components/FlashMessages";
+import Profile from "./components/Profile";
+import EditPost from "./components/EditPost";
+import NotFound from "./components/NotFound";
+const Search = lazy(() => import("./components/Search"));
+const Chat = lazy(() => import("./components/Chat"));
+import LoadingDotsIcon from "./components/LoadingDotsIcon";
 
 function Main() {
   const initialState = {
-    loggedIn: Boolean(localStorage.getItem('socialappToken')),
+    loggedIn: Boolean(localStorage.getItem("socialappToken")),
     flashMessages: [],
     user: {
-      token: localStorage.getItem('socialappToken'),
-      username: localStorage.getItem('socialappUsername'),
-      avatar: localStorage.getItem('socialappAvatar'),
+      token: localStorage.getItem("socialappToken"),
+      username: localStorage.getItem("socialappUsername"),
+      avatar: localStorage.getItem("socialappAvatar"),
     },
     isSearchOpen: false,
     isChatOpen: false,
@@ -43,32 +43,32 @@ function Main() {
 
   function reducer(draft, action) {
     switch (action.type) {
-      case 'login':
+      case "login":
         draft.loggedIn = true;
         draft.user = action.data;
         return;
-      case 'logout':
+      case "logout":
         draft.loggedIn = false;
         return;
-      case 'flashMessage':
+      case "flashMessage":
         draft.flashMessages.push(action.value);
         return;
-      case 'openSearch':
+      case "openSearch":
         draft.isSearchOpen = true;
         return;
-      case 'closeSearch':
+      case "closeSearch":
         draft.isSearchOpen = false;
         return;
-      case 'toggleChat':
+      case "toggleChat":
         draft.isChatOpen = !draft.isChatOpen;
         return;
-      case 'closeChat':
+      case "closeChat":
         draft.isChatOpen = false;
         return;
-      case 'incrementUnreadChatCount':
+      case "incrementUnreadChatCount":
         draft.unreadChatCount++;
         return;
-      case 'clearUnreadChatCount':
+      case "clearUnreadChatCount":
         draft.unreadChatCount = 0;
         return;
     }
@@ -78,13 +78,13 @@ function Main() {
 
   useEffect(() => {
     if (state.loggedIn) {
-      localStorage.setItem('socialappToken', state.user.token);
-      localStorage.setItem('socialappUsername', state.user.username);
-      localStorage.setItem('socialappAvatar', state.user.avatar);
+      localStorage.setItem("socialappToken", state.user.token);
+      localStorage.setItem("socialappUsername", state.user.username);
+      localStorage.setItem("socialappAvatar", state.user.avatar);
     } else {
-      localStorage.removeItem('socialappToken');
-      localStorage.removeItem('socialappUsername');
-      localStorage.removeItem('socialappAvatar');
+      localStorage.removeItem("socialappToken");
+      localStorage.removeItem("socialappUsername");
+      localStorage.removeItem("socialappAvatar");
     }
   }, [state.loggedIn]);
 
@@ -95,19 +95,19 @@ function Main() {
       async function fetchResults() {
         try {
           const response = await Axios.post(
-            '/checkToken',
+            "/checkToken",
             { token: state.user.token },
             { cancelToken: ourRequest.token }
           );
           if (!response.data) {
-            dispatch({ type: 'logout' });
+            dispatch({ type: "logout" });
             dispatch({
-              type: 'flashMessage',
-              value: 'Your session has expired. Please log in again.',
+              type: "flashMessage",
+              value: "Your session has expired. Please log in again.",
             });
           }
         } catch (e) {
-          console.log('There was a problem or the request was cancelled.');
+          console.log("There was a problem or the request was cancelled.");
         }
       }
       fetchResults();
@@ -169,7 +169,7 @@ function Main() {
   );
 }
 
-ReactDOM.render(<Main />, document.querySelector('#app'));
+ReactDOM.render(<Main />, document.querySelector("#app"));
 
 if (module.hot) {
   module.hot.accept();
