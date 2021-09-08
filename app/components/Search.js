@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import Post from './Post';
 
-function Search() {
+export default function Search() {
   const appDispatch = useContext(DispatchContext);
 
   const [state, setState] = useImmer({
@@ -143,5 +143,3 @@ function Search() {
     </>
   );
 }
-
-export default Search;
