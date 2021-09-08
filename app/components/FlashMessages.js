@@ -1,6 +1,4 @@
-import React from 'react';
-
-function FlashMessages(props) {
+export default function FlashMessages(props) {
   return (
     <div className="floating-alerts">
       {props.messages.map((msg, index) => (
@@ -14,5 +12,3 @@ function FlashMessages(props) {
     </div>
   );
 }
-
-export default FlashMessages;
