@@ -1,7 +1,7 @@
 import React from 'react';
 import Page from './Page';
 
-function Terms() {
+export default function Terms() {
   return (
     <Page title="Terms and Conditions">
       <h2>Our Terms &amp; Conditions</h2>
@@ -35,5 +35,3 @@ function Terms() {
     </Page>
   );
 }
-
-export default Terms;
