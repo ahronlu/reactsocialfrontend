@@ -3,7 +3,7 @@ import Container from "./Container";
 
 export default function Page({ title, wide, children }) {
   useEffect(() => {
-    document.title = `${title} | SocialApp`;
+    document.title = `${title} | Facebook`;
     window.scrollTo(0, 0);
   }, [title]);
 
