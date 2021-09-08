@@ -97,9 +97,9 @@ export default function HomeGuest() {
         }
         return;
       case "passwordAfterDelay":
-        if (draft.password.value.length < 12) {
+        if (draft.password.value.length < 6) {
           draft.password.hasErrors = true;
-          draft.password.message = "Password must be at least 12 characters.";
+          draft.password.message = "Password must be at least 6 characters.";
         }
         return;
       case "submitForm":
