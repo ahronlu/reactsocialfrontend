@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Page from './Page';
 import StateContext from '../StateContext';
 import { useImmer } from 'use-immer';
@@ -7,7 +7,7 @@ import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import Post from './Post';
 
-function Home() {
+export default function Home() {
   const appState = useContext(StateContext);
   const [state, setState] = useImmer({
     isLoading: true,
@@ -69,5 +69,3 @@ function Home() {
     </Page>
   );
 }
-
-export default Home;
