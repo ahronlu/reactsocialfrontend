@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-function Container({ children, wide }) {
+export default function Container({ children, wide }) {
   return (
     <div
       className={'container py-md-5 ' + (wide ? '' : 'container--narrow')}
@@ -9,5 +9,3 @@ function Container({ children, wide }) {
     </div>
   );
 }
-
-export default Container;
