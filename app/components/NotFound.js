@@ -1,5 +1,6 @@
-import Page from './Page';
-import { Link } from 'react-router-dom';
+import React from "react";
+import Page from "./Page";
+import { Link } from "react-router-dom";
 
 export default function NotFound() {
   return (

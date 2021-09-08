@@ -1,4 +1,4 @@
-import { useState, useReducer, lazy, useEffect, Suspense } from "react";
+import React, { useState, useReducer, useEffect, Suspense } from "react";
 import ReactDOM from "react-dom";
 import { useImmerReducer } from "use-immer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -17,14 +17,14 @@ import Footer from "./components/Footer";
 import About from "./components/About";
 import Terms from "./components/Terms";
 import Home from "./components/Home";
-const CreatePost = lazy(() => import("./components/CreatePost"));
-const ViewSinglePost = lazy(() => import("./components/ViewSinglePost"));
+const CreatePost = React.lazy(() => import("./components/CreatePost"));
+const ViewSinglePost = React.lazy(() => import("./components/ViewSinglePost"));
 import FlashMessages from "./components/FlashMessages";
 import Profile from "./components/Profile";
 import EditPost from "./components/EditPost";
 import NotFound from "./components/NotFound";
-const Search = lazy(() => import("./components/Search"));
-const Chat = lazy(() => import("./components/Chat"));
+const Search = React.lazy(() => import("./components/Search"));
+const Chat = React.lazy(() => import("./components/Chat"));
 import LoadingDotsIcon from "./components/LoadingDotsIcon";
 
 function Main() {

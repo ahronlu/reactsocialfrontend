@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import Container from './Container';
+import React, { useEffect } from "react";
+import Container from "./Container";
 
 export default function Page({ title, wide, children }) {
   useEffect(() => {

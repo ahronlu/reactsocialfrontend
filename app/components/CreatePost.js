@@ -1,9 +1,9 @@
-import { useState, useContext } from 'react';
-import Page from './Page';
-import Axios from 'axios';
-import { withRouter } from 'react-router-dom';
-import DispatchContext from '../DispatchContext';
-import StateContext from '../StateContext';
+import React, { useState, useContext } from "react";
+import Page from "./Page";
+import Axios from "axios";
+import { withRouter } from "react-router-dom";
+import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
 
 function CreatePost({ history }) {
   const [title, setTitle] = useState();
@@ -14,19 +14,19 @@ function CreatePost({ history }) {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await Axios.post('create-post', {
+      const response = await Axios.post("create-post", {
         title,
         body,
         token: appState.user.token,
       });
       // Redirect to new post url
       appDispatch({
-        type: 'flashMessage',
-        value: 'Congrats, you created a new post.',
+        type: "flashMessage",
+        value: "Congrats, you created a new post.",
       });
       history.push(`/post/${response.data}`);
     } catch (e) {
-      console.log('There was a problem.');
+      console.log("There was a problem.");
     }
   }
 

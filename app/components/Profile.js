@@ -1,12 +1,12 @@
-import { useEffect, useContext } from 'react';
-import Page from './Page';
-import { useParams, NavLink, Switch, Route } from 'react-router-dom';
-import Axios from 'axios';
-import StateContext from '../StateContext';
-import ProfilePosts from './ProfilePosts';
-import ProfileFollower from './ProfileFollower';
-import ProfileFollowing from './ProfileFollowing';
-import { useImmer } from 'use-immer';
+import React, { useEffect, useContext } from "react";
+import Page from "./Page";
+import { useParams, NavLink, Switch, Route } from "react-router-dom";
+import Axios from "axios";
+import StateContext from "../StateContext";
+import ProfilePosts from "./ProfilePosts";
+import ProfileFollower from "./ProfileFollower";
+import ProfileFollowing from "./ProfileFollowing";
+import { useImmer } from "use-immer";
 
 export default function Profile() {
   const { username } = useParams();
@@ -16,10 +16,10 @@ export default function Profile() {
     startFollowingRequestCount: 0,
     stopFollowingRequestCount: 0,
     profileData: {
-      profileUsername: '...',
-      profileAvatar: 'https://gravatar.com/avatar/placeholder?s=128',
+      profileUsername: "...",
+      profileAvatar: "https://gravatar.com/avatar/placeholder?s=128",
       isFollowing: false,
-      counts: { postCount: '', folowerCount: '', followingCount: '' },
+      counts: { postCount: "", folowerCount: "", followingCount: "" },
     },
   });
 
@@ -35,7 +35,7 @@ export default function Profile() {
           draft.profileData = response.data;
         });
       } catch (e) {
-        console.log('There was a problem.');
+        console.log("There was a problem.");
       }
     }
     fetchData();
@@ -66,7 +66,7 @@ export default function Profile() {
             draft.followActionLoading = false;
           });
         } catch (e) {
-          console.log('There was a problem.');
+          console.log("There was a problem.");
         }
       }
       fetchData();
@@ -98,7 +98,7 @@ export default function Profile() {
             draft.followActionLoading = false;
           });
         } catch (e) {
-          console.log('There was a problem.');
+          console.log("There was a problem.");
         }
       }
       fetchData();
@@ -123,12 +123,12 @@ export default function Profile() {
   return (
     <Page title={`${username} Profile`}>
       <h2>
-        <img className="avatar-small" src={state.profileData.profileAvatar} />{' '}
+        <img className="avatar-small" src={state.profileData.profileAvatar} />{" "}
         {state.profileData.profileUsername}
         {appState.loggedIn &&
           !state.profileData.isFollowing &&
           appState.user.username !== state.profileData.profileUsername &&
-          state.profileData.profileUsername !== '...' && (
+          state.profileData.profileUsername !== "..." && (
             <button
               onClick={startFollowing}
               disabled={state.followActionLoading}
@@ -140,7 +140,7 @@ export default function Profile() {
         {appState.loggedIn &&
           state.profileData.isFollowing &&
           appState.user.username !== state.profileData.profileUsername &&
-          state.profileData.profileUsername !== '...' && (
+          state.profileData.profileUsername !== "..." && (
             <button
               onClick={stopFollowing}
               disabled={state.followActionLoading}

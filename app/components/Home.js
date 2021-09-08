@@ -1,11 +1,11 @@
-import { useContext, useEffect } from 'react';
-import Page from './Page';
-import StateContext from '../StateContext';
-import { useImmer } from 'use-immer';
-import LoadingDotsIcon from './LoadingDotsIcon';
-import Axios from 'axios';
-import { Link } from 'react-router-dom';
-import Post from './Post';
+import React, { useContext, useEffect } from "react";
+import Page from "./Page";
+import StateContext from "../StateContext";
+import { useImmer } from "use-immer";
+import LoadingDotsIcon from "./LoadingDotsIcon";
+import Axios from "axios";
+import { Link } from "react-router-dom";
+import Post from "./Post";
 
 export default function Home() {
   const appState = useContext(StateContext);
@@ -19,7 +19,7 @@ export default function Home() {
 
     async function fetchData() {
       try {
-        const response = await Axios.post('/getHomeFeed', {
+        const response = await Axios.post("/getHomeFeed", {
           token: appState.user.token,
         });
         setState((draft) => {
@@ -27,7 +27,7 @@ export default function Home() {
           draft.feed = response.data;
         });
       } catch (e) {
-        console.log('There was a problem.');
+        console.log("There was a problem.");
       }
     }
     fetchData();

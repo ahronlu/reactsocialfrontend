@@ -1,15 +1,15 @@
-import { useEffect, useState, useContext } from 'react';
-import Page from './Page';
-import { useParams, Link, withRouter } from 'react-router-dom';
-import Axios from 'axios';
-import LoadingDotsIcon from './LoadingDotsIcon';
-import ReactMarkdown from 'react-markdown';
-import ReactTooltip from 'react-tooltip';
-import NotFound from './NotFound';
-import StateContext from '../StateContext';
-import DispatchContext from '../DispatchContext';
+import React, { useEffect, useState, useContext } from "react";
+import Page from "./Page";
+import { useParams, Link, withRouter } from "react-router-dom";
+import Axios from "axios";
+import LoadingDotsIcon from "./LoadingDotsIcon";
+import ReactMarkdown from "react-markdown";
+import ReactTooltip from "react-tooltip";
+import NotFound from "./NotFound";
+import StateContext from "../StateContext";
+import DispatchContext from "../DispatchContext";
 
-function ViewSinglePost(props) {
+function ViewSinglePost({ history }) {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const { id } = useParams();
@@ -27,7 +27,7 @@ function ViewSinglePost(props) {
         setPost(response.data);
         setIsLoading(false);
       } catch (e) {
-        console.log('There was a problem or the request wash cancelled.');
+        console.log("There was a problem or the request wash cancelled.");
       }
     }
     fetchPost();
@@ -61,22 +61,22 @@ function ViewSinglePost(props) {
 
   async function deleteHandler() {
     const areYouSure = window.confirm(
-      'Do you really want to delete this post?'
+      "Do you really want to delete this post?"
     );
     if (areYouSure) {
       try {
         const response = await Axios.delete(`/post/${id}`, {
           data: { token: appState.user.token },
         });
-        if (response.data === 'Success') {
+        if (response.data === "Success") {
           appDispatch({
-            type: 'flashMessage',
-            value: 'Post was successfuly deleted.',
+            type: "flashMessage",
+            value: "Post was successfuly deleted.",
           });
-          props.history.push(`/profile/${appState.user.username}`);
+          history.push(`/profile/${appState.user.username}`);
         }
       } catch (e) {
-        console.log('There was a problem.');
+        console.log("There was a problem.");
       }
     }
   }
@@ -104,7 +104,7 @@ function ViewSinglePost(props) {
             >
               <i className="fas fa-trash"></i>
             </a>
-            <ReactTooltip id="delete" className="custom-tooltip" />{' '}
+            <ReactTooltip id="delete" className="custom-tooltip" />{" "}
           </span>
         )}
       </div>
@@ -113,10 +113,10 @@ function ViewSinglePost(props) {
         <Link to={`/profile/${post.author.username}`}>
           <img className="avatar-tiny" src={post.author.avatar} />
         </Link>
-        Posted by{' '}
+        Posted by{" "}
         <Link to={`/profile/${post.author.username}`}>
           {post.author.username}
-        </Link>{' '}
+        </Link>{" "}
         on {dateFormatted}
       </p>
 
@@ -124,13 +124,13 @@ function ViewSinglePost(props) {
         <ReactMarkdown
           source={post.body}
           allowedTypes={[
-            'paragraph',
-            'strong',
-            'emphasis',
-            'text',
-            'heading',
-            'list',
-            'listItem',
+            "paragraph",
+            "strong",
+            "emphasis",
+            "text",
+            "heading",
+            "list",
+            "listItem",
           ]}
         />
       </div>

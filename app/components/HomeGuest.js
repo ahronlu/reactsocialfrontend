@@ -1,44 +1,44 @@
-import { useState, useEffect, useContext } from 'react';
-import Page from './Page';
-import Axios from 'axios';
-import { useImmerReducer } from 'use-immer';
-import { CSSTransition } from 'react-transition-group';
-import DispatchContext from '../DispatchContext';
+import React, { useState, useEffect, useContext } from "react";
+import Page from "./Page";
+import Axios from "axios";
+import { useImmerReducer } from "use-immer";
+import { CSSTransition } from "react-transition-group";
+import DispatchContext from "../DispatchContext";
 
 export default function HomeGuest() {
   const appDispatch = useContext(DispatchContext);
 
   const initialState = {
     username: {
-      value: '',
+      value: "",
       hasErrors: false,
-      message: '',
+      message: "",
       isUnique: false,
       checkCount: 0,
     },
     email: {
-      value: '',
+      value: "",
       hasErrors: false,
-      message: '',
+      message: "",
       isUnique: false,
       checkCount: 0,
     },
     password: {
-      value: '',
+      value: "",
       hasErrors: false,
-      message: '',
+      message: "",
     },
     submitCount: 0,
   };
 
   function ourReducer(draft, action) {
     switch (action.type) {
-      case 'usernameImmediately':
+      case "usernameImmediately":
         draft.username.hasErrors = false;
         draft.username.value = action.value;
         if (draft.username.value.length > 30) {
           draft.username.hasErrors = true;
-          draft.username.message = 'Username cannot exceed 30 characters.';
+          draft.username.message = "Username cannot exceed 30 characters.";
         }
         if (
           draft.username.value &&
@@ -46,63 +46,63 @@ export default function HomeGuest() {
         ) {
           draft.username.hasErrors = true;
           draft.username.message =
-            'Username can only contain letters and numbers.';
+            "Username can only contain letters and numbers.";
         }
         return;
-      case 'usernameAfterDelay':
+      case "usernameAfterDelay":
         if (draft.username.value.length < 3) {
           draft.username.hasErrors = true;
-          draft.username.message = 'Username must be at least 3 characters.';
+          draft.username.message = "Username must be at least 3 characters.";
         }
         if (!draft.hasErrors && !action.noRequest) {
           draft.username.checkCount++;
         }
         return;
-      case 'usernameUniqueResults':
+      case "usernameUniqueResults":
         if (action.value) {
           draft.username.hasErrors = true;
           draft.username.isUnique = false;
-          draft.username.message = 'That username is already taken.';
+          draft.username.message = "That username is already taken.";
         } else {
           draft.username.isUnique = true;
         }
         return;
-      case 'emailImmediately':
+      case "emailImmediately":
         draft.email.hasErrors = false;
         draft.email.value = action.value;
         return;
-      case 'emailAfterDelay':
+      case "emailAfterDelay":
         if (!/^\S+@\S+$/.test(draft.email.value)) {
           draft.email.hasErrors = true;
-          draft.email.message = 'You must provide a valid email address.';
+          draft.email.message = "You must provide a valid email address.";
         }
         if (!draft.email.hasErrors && !action.noRequest) {
           draft.email.checkCount++;
         }
         return;
-      case 'emailUniqueResults':
+      case "emailUniqueResults":
         if (action.value) {
           draft.email.hasErrors = true;
           draft.email.isUnique = false;
-          draft.email.message = 'That email is already being used.';
+          draft.email.message = "That email is already being used.";
         } else {
           draft.email.isUnique = true;
         }
-      case 'passwordImmediately':
+      case "passwordImmediately":
         draft.password.hasErrors = false;
         draft.password.value = action.value;
         if (draft.password.value.length > 50) {
           draft.password.hasErrors = true;
-          draft.password.message = 'Password cannot exceed 50 characters.';
+          draft.password.message = "Password cannot exceed 50 characters.";
         }
         return;
-      case 'passwordAfterDelay':
+      case "passwordAfterDelay":
         if (draft.password.value.length < 12) {
           draft.password.hasErrors = true;
-          draft.password.message = 'Password must be at least 12 characters.';
+          draft.password.message = "Password must be at least 12 characters.";
         }
         return;
-      case 'submitForm':
+      case "submitForm":
         if (
           !draft.username.hasErrors &&
           draft.username.isUnique &&
@@ -121,7 +121,7 @@ export default function HomeGuest() {
   useEffect(() => {
     if (state.username.value) {
       const delay = setTimeout(
-        () => dispatch({ type: 'usernameAfterDelay' }),
+        () => dispatch({ type: "usernameAfterDelay" }),
         800
       );
       return () => clearTimeout(delay);
@@ -131,7 +131,7 @@ export default function HomeGuest() {
   useEffect(() => {
     if (state.email.value) {
       const delay = setTimeout(
-        () => dispatch({ type: 'emailAfterDelay' }),
+        () => dispatch({ type: "emailAfterDelay" }),
         800
       );
       return () => clearTimeout(delay);
@@ -141,7 +141,7 @@ export default function HomeGuest() {
   useEffect(() => {
     if (state.password.value) {
       const delay = setTimeout(
-        () => dispatch({ type: 'passwordAfterDelay' }),
+        () => dispatch({ type: "passwordAfterDelay" }),
         800
       );
       return () => clearTimeout(delay);
@@ -154,13 +154,13 @@ export default function HomeGuest() {
       async function fetchResults() {
         try {
           const response = await Axios.post(
-            '/doesUsernameExist',
+            "/doesUsernameExist",
             { username: state.username.value },
             { cancelToken: ourRequest.token }
           );
-          dispatch({ type: 'usernameUniqueResults', value: response.data });
+          dispatch({ type: "usernameUniqueResults", value: response.data });
         } catch (e) {
-          console.log('There was a problem or the request was cancelled.');
+          console.log("There was a problem or the request was cancelled.");
         }
       }
       fetchResults();
@@ -174,13 +174,13 @@ export default function HomeGuest() {
       async function fetchResults() {
         try {
           const response = await Axios.post(
-            '/doesEmailExist',
+            "/doesEmailExist",
             { email: state.email.value },
             { cancelToken: ourRequest.token }
           );
-          dispatch({ type: 'emailUniqueResults', value: response.data });
+          dispatch({ type: "emailUniqueResults", value: response.data });
         } catch (e) {
-          console.log('There was a problem or the request was cancelled.');
+          console.log("There was a problem or the request was cancelled.");
         }
       }
       fetchResults();
@@ -194,7 +194,7 @@ export default function HomeGuest() {
       async function fetchResults() {
         try {
           const response = await Axios.post(
-            '/register',
+            "/register",
             {
               username: state.username.value,
               email: state.email.value,
@@ -202,13 +202,13 @@ export default function HomeGuest() {
             },
             { cancelToken: ourRequest.token }
           );
-          appDispatch({ type: 'login', data: response.data });
+          appDispatch({ type: "login", data: response.data });
           appDispatch({
-            type: 'flashMessage',
-            value: 'Congrats! Welcome to your new account.',
+            type: "flashMessage",
+            value: "Congrats! Welcome to your new account.",
           });
         } catch (e) {
-          console.log('There was a problem or the request was cancelled.');
+          console.log("There was a problem or the request was cancelled.");
         }
       }
       fetchResults();
@@ -218,21 +218,21 @@ export default function HomeGuest() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch({ type: 'usernameImmediately', value: state.username.value });
+    dispatch({ type: "usernameImmediately", value: state.username.value });
     dispatch({
-      type: 'usernameAfterDelay',
+      type: "usernameAfterDelay",
       value: state.username.value,
       noRequest: true,
     });
-    dispatch({ type: 'emailImmediately', value: state.email.value });
+    dispatch({ type: "emailImmediately", value: state.email.value });
     dispatch({
-      type: 'emailAfterDelay',
+      type: "emailAfterDelay",
       value: state.email.value,
       noRequest: true,
     });
-    dispatch({ type: 'passwordImmediately', value: state.password.value });
-    dispatch({ type: 'passwordAfterDelay', value: state.password.value });
-    dispatch({ type: 'submitForm' });
+    dispatch({ type: "passwordImmediately", value: state.password.value });
+    dispatch({ type: "passwordAfterDelay", value: state.password.value });
+    dispatch({ type: "submitForm" });
   }
 
   return (
@@ -256,7 +256,7 @@ export default function HomeGuest() {
               <input
                 onChange={(e) =>
                   dispatch({
-                    type: 'usernameImmediately',
+                    type: "usernameImmediately",
                     value: e.target.value,
                   })
                 }
@@ -284,7 +284,7 @@ export default function HomeGuest() {
               </label>
               <input
                 onChange={(e) =>
-                  dispatch({ type: 'emailImmediately', value: e.target.value })
+                  dispatch({ type: "emailImmediately", value: e.target.value })
                 }
                 id="email-register"
                 name="email"
@@ -311,7 +311,7 @@ export default function HomeGuest() {
               <input
                 onChange={(e) =>
                   dispatch({
-                    type: 'passwordImmediately',
+                    type: "passwordImmediately",
                     value: e.target.value,
                   })
                 }

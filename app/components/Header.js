@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import HeaderLoggedOut from './HeaderLoggedOut';
-import HeaderLoggedIn from './HeaderLoggedIn';
-import StateContext from '../StateContext';
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import HeaderLoggedOut from "./HeaderLoggedOut";
+import HeaderLoggedIn from "./HeaderLoggedIn";
+import StateContext from "../StateContext";
 
-function Header(props) {
+function Header({ staticEmpty }) {
   const appState = useContext(StateContext);
   const headerContent = appState.loggedIn ? (
     <HeaderLoggedIn />
@@ -20,7 +20,7 @@ function Header(props) {
             Facebook
           </Link>
         </h4>
-        {!props.staticEmpty ? headerContent : ''}
+        {!staticEmpty ? headerContent : ""}
       </div>
     </header>
   );

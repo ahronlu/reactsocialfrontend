@@ -1,4 +1,5 @@
-import Page from './Page';
+import React from "react";
+import Page from "./Page";
 
 export default function About() {
   return (

@@ -1,26 +1,26 @@
-import { useEffect, useState, useContext } from 'react';
-import { useImmerReducer } from 'use-immer';
-import Page from './Page';
-import { useParams, Link, withRouter } from 'react-router-dom';
-import Axios from 'axios';
-import LoadingDotsIcon from './LoadingDotsIcon';
-import StateContext from '../StateContext';
-import DispatchContext from '../DispatchContext';
-import NotFound from './NotFound';
+import React, { useEffect, useState, useContext } from "react";
+import { useImmerReducer } from "use-immer";
+import Page from "./Page";
+import { useParams, Link, withRouter } from "react-router-dom";
+import Axios from "axios";
+import LoadingDotsIcon from "./LoadingDotsIcon";
+import StateContext from "../StateContext";
+import DispatchContext from "../DispatchContext";
+import NotFound from "./NotFound";
 
 function EditPost({ history }) {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const originalState = {
     title: {
-      value: '',
+      value: "",
       hasErrors: false,
-      message: '',
+      message: "",
     },
     body: {
-      value: '',
+      value: "",
       hasErrors: false,
-      message: '',
+      message: "",
     },
     isFetching: true,
     isSaving: false,
@@ -31,43 +31,43 @@ function EditPost({ history }) {
 
   function ourReducer(draft, action) {
     switch (action.type) {
-      case 'fetchComplete':
+      case "fetchComplete":
         draft.title.value = action.value.title;
         draft.body.value = action.value.body;
         draft.isFetching = false;
         return;
-      case 'titleChange':
+      case "titleChange":
         draft.title.hasErrors = false;
         draft.title.value = action.value;
         return;
-      case 'bodyChange':
+      case "bodyChange":
         draft.body.hasErrors = false;
         draft.body.value = action.value;
         return;
-      case 'submitRequest':
+      case "submitRequest":
         if (!draft.title.hasErrors && !draft.body.hasErrors) {
           draft.sendCount++;
         }
         return;
-      case 'saveRequestStarted':
+      case "saveRequestStarted":
         draft.isSaving = true;
         return;
-      case 'saveRequestFinished':
+      case "saveRequestFinished":
         draft.isSaving = false;
         return;
-      case 'titleRules':
+      case "titleRules":
         if (!action.value.trim()) {
           draft.title.hasErrors = true;
-          draft.title.message = 'You must provide a title.';
+          draft.title.message = "You must provide a title.";
         }
         return;
-      case 'bodyRules':
+      case "bodyRules":
         if (!action.value.trim()) {
           draft.body.hasErrors = true;
-          draft.body.message = 'You must provide a body.';
+          draft.body.message = "You must provide a body.";
         }
         return;
-      case 'notFound':
+      case "notFound":
         draft.notFound = true;
         return;
     }
@@ -77,9 +77,9 @@ function EditPost({ history }) {
 
   function submitHandler(e) {
     e.preventDefault();
-    dispatch({ type: 'titleRules', value: state.title.value });
-    dispatch({ type: 'bodyRules', value: state.body.value });
-    dispatch({ type: 'submitRequest' });
+    dispatch({ type: "titleRules", value: state.title.value });
+    dispatch({ type: "bodyRules", value: state.body.value });
+    dispatch({ type: "submitRequest" });
   }
 
   useEffect(() => {
@@ -91,20 +91,20 @@ function EditPost({ history }) {
           cancelToken: ourRequest.token,
         });
         if (response.data) {
-          dispatch({ type: 'fetchComplete', value: response.data });
+          dispatch({ type: "fetchComplete", value: response.data });
           if (appState.user.username !== response.data.author.username) {
             appDispatch({
-              type: 'flashMessage',
-              value: 'You do not have permission to edit that post.',
+              type: "flashMessage",
+              value: "You do not have permission to edit that post.",
             });
             // redirect to hompage
-            history.push('/');
+            history.push("/");
           }
         } else {
-          dispatch({ type: 'notFound' });
+          dispatch({ type: "notFound" });
         }
       } catch (e) {
-        console.log('There was a problem or the request wash cancelled.');
+        console.log("There was a problem or the request wash cancelled.");
       }
     }
     fetchPost();
@@ -115,7 +115,7 @@ function EditPost({ history }) {
 
   useEffect(() => {
     if (state.sendCount) {
-      dispatch({ type: 'saveRequestStarted' });
+      dispatch({ type: "saveRequestStarted" });
       const ourRequest = Axios.CancelToken.source();
       async function fetchPost() {
         try {
@@ -130,10 +130,10 @@ function EditPost({ history }) {
               cancelToken: ourRequest.token,
             }
           );
-          dispatch({ type: 'saveRequestFinished' });
-          appDispatch({ type: 'flashMessage', value: 'Post was update.' });
+          dispatch({ type: "saveRequestFinished" });
+          appDispatch({ type: "flashMessage", value: "Post was update." });
         } catch (e) {
-          console.log('There was a problem or the request wash cancelled.');
+          console.log("There was a problem or the request wash cancelled.");
         }
       }
       fetchPost();
@@ -167,12 +167,12 @@ function EditPost({ history }) {
           <input
             onBlur={(e) =>
               dispatch({
-                type: 'titleRules',
+                type: "titleRules",
                 value: e.target.value,
               })
             }
             onChange={(e) =>
-              dispatch({ type: 'titleChange', value: e.target.value })
+              dispatch({ type: "titleChange", value: e.target.value })
             }
             value={state.title.value}
             autoFocus
@@ -198,12 +198,12 @@ function EditPost({ history }) {
           <textarea
             onBlur={(e) =>
               dispatch({
-                type: 'bodyRules',
+                type: "bodyRules",
                 value: e.target.value,
               })
             }
             onChange={(e) =>
-              dispatch({ type: 'bodyChange', value: e.target.value })
+              dispatch({ type: "bodyChange", value: e.target.value })
             }
             name="body"
             id="post-body"

@@ -1,9 +1,9 @@
-import { useContext, useEffect, useRef } from 'react';
-import StateContext from '../StateContext';
-import DispatchContext from '../DispatchContext';
-import { useImmer } from 'use-immer';
-import { Link } from 'react-router-dom';
-import io from 'socket.io-client';
+import React, { useContext, useEffect, useRef } from "react";
+import StateContext from "../StateContext";
+import DispatchContext from "../DispatchContext";
+import { useImmer } from "use-immer";
+import { Link } from "react-router-dom";
+import io from "socket.io-client";
 
 export default function Chat() {
   const socket = useRef(null);
@@ -12,23 +12,23 @@ export default function Chat() {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const [state, setState] = useImmer({
-    fieldValue: '',
+    fieldValue: "",
     chatMessages: [],
   });
 
   useEffect(() => {
     if (appState.isChatOpen) {
       chatField.current.focus();
-      appDispatch({ type: 'clearUnreadChatCount' });
+      appDispatch({ type: "clearUnreadChatCount" });
     }
   }, [appState.isChatOpen]);
 
   useEffect(() => {
     socket.current = io(
-      process.env.BACKENDURL || 'https://socialkof.herokuapp.com'
+      process.env.BACKENDURL || "https://socialkof.herokuapp.com"
     );
 
-    socket.current.on('chatFromServer', (message) => {
+    socket.current.on("chatFromServer", (message) => {
       setState((draft) => {
         draft.chatMessages.push(message);
       });
@@ -40,7 +40,7 @@ export default function Chat() {
   useEffect(() => {
     chatLog.current.scrollTop = chatLog.current.scrollHeight;
     if (state.chatMessages.length && !appState.isChatOpen) {
-      appDispatch({ type: 'incrementUnreadChatCount' });
+      appDispatch({ type: "incrementUnreadChatCount" });
     }
   }, [state.chatMessages]);
 
@@ -53,7 +53,7 @@ export default function Chat() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    socket.current.emit('chatFromBrowser', {
+    socket.current.emit("chatFromBrowser", {
       message: state.fieldValue,
       token: appState.user.token,
     });
@@ -64,7 +64,7 @@ export default function Chat() {
         username: appState.user.username,
         avatar: appState.user.avatar,
       });
-      draft.fieldValue = '';
+      draft.fieldValue = "";
     });
   }
 
@@ -72,14 +72,14 @@ export default function Chat() {
     <div
       id="chat-wrapper"
       className={
-        'chat-wrapper shadow border-top border-left border-right ' +
-        (appState.isChatOpen ? 'chat-wrapper--is-visible' : '')
+        "chat-wrapper shadow border-top border-left border-right " +
+        (appState.isChatOpen ? "chat-wrapper--is-visible" : "")
       }
     >
       <div className="chat-title-bar bg-primary">
         Chat
         <span
-          onClick={() => appDispatch({ type: 'closeChat' })}
+          onClick={() => appDispatch({ type: "closeChat" })}
           className="chat-title-bar-close"
         >
           <i className="fas fa-times-circle"></i>
