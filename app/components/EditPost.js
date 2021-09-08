@@ -8,7 +8,7 @@ import StateContext from '../StateContext';
 import DispatchContext from '../DispatchContext';
 import NotFound from './NotFound';
 
-function EditPost(props) {
+function EditPost({ history }) {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const originalState = {
@@ -98,7 +98,7 @@ function EditPost(props) {
               value: 'You do not have permission to edit that post.',
             });
             // redirect to hompage
-            props.history.push('/');
+            history.push('/');
           }
         } else {
           dispatch({ type: 'notFound' });
