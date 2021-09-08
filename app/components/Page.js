@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import Container from './Container';
 
-function Page(props) {
+function Page({ title, wide, children }) {
   useEffect(() => {
-    document.title = `${props.title} | SocialApp`;
+    document.title = `${title} | SocialApp`;
     window.scrollTo(0, 0);
-  }, [props.title]);
+  }, [title]);
 
-  return <Container wide={props.wide}>{props.children}</Container>;
+  return <Container wide={wide}>{children}</Container>;
 }
 
 export default Page;
