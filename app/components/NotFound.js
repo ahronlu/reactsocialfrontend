@@ -1,8 +1,7 @@
-import React from 'react';
 import Page from './Page';
 import { Link } from 'react-router-dom';
 
-function NotFound() {
+export default function NotFound() {
   return (
     <Page title="Not Found">
       <div className="text-center">
@@ -15,5 +14,3 @@ function NotFound() {
     </Page>
   );
 }
-
-export default NotFound;
