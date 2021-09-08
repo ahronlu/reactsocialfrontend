@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import Page from './Page';
 import { useParams, NavLink, Switch, Route } from 'react-router-dom';
 import Axios from 'axios';
@@ -8,7 +8,7 @@ import ProfileFollower from './ProfileFollower';
 import ProfileFollowing from './ProfileFollowing';
 import { useImmer } from 'use-immer';
 
-function Profile() {
+export default function Profile() {
   const { username } = useParams();
   const appState = useContext(StateContext);
   const [state, setState] = useImmer({
@@ -187,5 +187,3 @@ function Profile() {
     </Page>
   );
 }
-
-export default Profile;
