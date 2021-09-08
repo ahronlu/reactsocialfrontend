@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Page from './Page';
 import Axios from 'axios';
 import { useImmerReducer } from 'use-immer';
 import { CSSTransition } from 'react-transition-group';
 import DispatchContext from '../DispatchContext';
 
-function HomeGuest() {
+export default function HomeGuest() {
   const appDispatch = useContext(DispatchContext);
 
   const initialState = {
@@ -344,5 +344,3 @@ function HomeGuest() {
     </Page>
   );
 }
-
-export default HomeGuest;
