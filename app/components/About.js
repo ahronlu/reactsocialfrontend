@@ -1,7 +1,6 @@
-import React from 'react';
 import Page from './Page';
 
-function About() {
+export default function About() {
   return (
     <Page title="About Us">
       <h2>About Us</h2>
@@ -28,5 +27,3 @@ function About() {
     </Page>
   );
 }
-
-export default About;
