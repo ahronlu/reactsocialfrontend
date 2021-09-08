@@ -1,11 +1,7 @@
-import React from 'react';
-
-function LoadingDotsIcon() {
+export default function LoadingDotsIcon() {
   return (
     <div className="dots-loading">
       <div></div>
     </div>
   );
 }
-
-export default LoadingDotsIcon;
