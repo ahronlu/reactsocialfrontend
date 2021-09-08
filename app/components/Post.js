@@ -1,7 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+Aimport { Link } from 'react-router-dom';
 
-function Post({ post, onClick, noAuthor }) {
+export default function Post({ post, onClick, noAuthor }) {
   const date = new Date(post.createdDate);
   const dateFormatted = `${
     date.getMonth() + 1
@@ -21,5 +20,3 @@ function Post({ post, onClick, noAuthor }) {
     </Link>
   );
 }
-
-export default Post;
