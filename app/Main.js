@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect, Suspense } from 'react';
+import { useState, useReducer, useEffect, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { useImmerReducer } from 'use-immer';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
