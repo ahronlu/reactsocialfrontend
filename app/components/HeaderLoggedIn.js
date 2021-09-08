@@ -4,7 +4,7 @@ import DispatchContext from '../DispatchContext';
 import StateContext from '../StateContext';
 import ReactTooltip from 'react-tooltip';
 
-function HeaderLoggedIn() {
+export default function HeaderLoggedIn() {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
 
@@ -70,5 +70,3 @@ function HeaderLoggedIn() {
     </div>
   );
 }
-
-export default HeaderLoggedIn;
