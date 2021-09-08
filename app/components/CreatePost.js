@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import DispatchContext from '../DispatchContext';
 import StateContext from '../StateContext';
 
-function CreatePost(props) {
+function CreatePost({ history }) {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
   const appDispatch = useContext(DispatchContext);
@@ -24,7 +24,7 @@ function CreatePost(props) {
         type: 'flashMessage',
         value: 'Congrats, you created a new post.',
       });
-      props.history.push(`/post/${response.data}`);
+      history.push(`/post/${response.data}`);
     } catch (e) {
       console.log('There was a problem.');
     }
