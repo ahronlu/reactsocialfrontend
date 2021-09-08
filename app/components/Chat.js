@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import StateContext from '../StateContext';
 import DispatchContext from '../DispatchContext';
 import { useImmer } from 'use-immer';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 
-function Chat() {
+export default function Chat() {
   const socket = useRef(null);
   const chatField = useRef(null);
   const chatLog = useRef(null);
@@ -134,5 +134,3 @@ function Chat() {
     </div>
   );
 }
-
-export default Chat;
